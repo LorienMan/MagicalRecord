@@ -1332,6 +1332,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					"MR_ENABLE_ACTIVE_RECORD_LOGGING_=0",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				OTHER_LDFLAGS = "-ObjC";

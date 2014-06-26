@@ -55,7 +55,12 @@ NSString * const kMagicalRecordDidMergeChangesFromiCloudNotification = @"kMagica
         MRLog(@"Merging changes From iCloud %@context%@", 
               self == [NSManagedObjectContext MR_defaultContext] ? @"*** DEFAULT *** " : @"",
               ([NSThread isMainThread] ? @" *** on Main Thread ***" : @""));
-        
+
+        // Load from faults changed objects
+        for (NSManagedObject *object in [[notification userInfo] objectForKey:NSUpdatedObjectsKey]) {
+            [[self objectWithID:[object objectID]] willAccessValueForKey:nil];
+        }
+
         [self mergeChangesFromContextDidSaveNotification:notification];
         
         NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -71,7 +76,13 @@ NSString * const kMagicalRecordDidMergeChangesFromiCloudNotification = @"kMagica
 	MRLog(@"Merging changes to %@context%@", 
           self == [NSManagedObjectContext MR_defaultContext] ? @"*** DEFAULT *** " : @"",
           ([NSThread isMainThread] ? @" *** on Main Thread ***" : @""));
-    
+
+
+    // Load from faults changed objects
+    for (NSManagedObject *object in [[notification userInfo] objectForKey:NSUpdatedObjectsKey]) {
+        [[self objectWithID:[object objectID]] willAccessValueForKey:nil];
+    }
+
 	[self mergeChangesFromContextDidSaveNotification:notification];
 }
 
